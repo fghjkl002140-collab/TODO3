@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}TODO リスト - ホーム{% endblock %}
+
+{% block content %}
+<div class="todo-list">
+    <h2>やることリスト</h2>
+    
+    {% if todos %}
+        <div class="todo-grid">
+            {% for todo in todos %}
+                <div class="todo-card">
+                    <div class="todo-header">
+                        <h3>{{ todo.title }}</h3>
+                        <span class="todo-id">ID: {{ todo.id }}</span>
+                    </div>
+                    
+                    <div class="todo-content">
+                        <p>{{ todo.content if todo.content else '内容なし' }}</p>
+                    </div>
+                    
+                    <div class="todo-footer">
+                        <div class="todo-date">
+                            {% if todo.due_date %}
+                                <span class="due-date">📅 期日: {{ todo.due_date }}</span>
+                            {% else %}
+                                <span class="no-date">期日未設定</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="todo-actions">
+                            <a href="{{ url_for('edit_todo', todo_id=todo.id) }}" class="btn btn-edit">編集</a>
+                            <a href="{{ url_for('delete_todo', todo_id=todo.id) }}" 
+                               class="btn btn-delete" 
+                               onclick="return confirm('本当に削除しますか？')">削除</a>
+                        </div>
+                    </div>
+                    
+                    <div class="todo-meta">
+                        <small>作成: {{ todo.created_at if todo.created_at else '不明' }}</small>
+                        {% if todo.updated_at %}
+                            <small>更新: {{ todo.updated_at }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>まだTODOがありません</p>
+            <a href="{{ url_for('add_todo') }}" class="btn btn-primary-large">最初のTODOを追加</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

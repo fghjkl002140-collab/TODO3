@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: todo-list-app
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        value: your-secret-key-here
+      - key: GOOGLE_CREDENTIALS
+        value: 'SET_IN_RENDER_DASHBOARD'
+      - key: SPREADSHEET_ID
+        value: 1B6w3eCud5CFCHLjfsCnrJl84a31nMO4azmyLno-jEgI
